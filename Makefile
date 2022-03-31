@@ -1,11 +1,12 @@
-VERSION  ?= 1.0
-IMG      ?= token-parser:$(VERSION)
+PROJECT_NAME := "parser"
+VERSION      := $$(git describe --tags | cut -d '-' -f 1)
+PKG          := "github.com/sjbodzo/$(PROJECT_NAME)"
 
 ifeq (,$(shell go env GOBIN))
 GOBIN=$(shell go env GOPATH)/bin
 else
 GOBIN=$(shell go env GOBIN)
-endif    
+endif
 
 ##@ General
 
@@ -29,15 +30,28 @@ all: build
 
 ##@ Development
 
-.PHONY: build
-build: ## Builds the binary locally
-	go build -o bin/app main.go
+.PHONY: test
+test: ## Run tests
+	@go test -cover ./...
+	@go test ./... -coverprofile=cover.out && go tool cover -html=cover.out -o coverage.html
+
+.PHONY: build ## Builds the binary locally for the major platforms
+build: mac windows linux
+
+mac: ## Builds the binary for mac
+	go build -a -ldflags "-w -X '$(PKG)/cmd.Version=$(VERSION)'"  -o bin/$(PROJECT_NAME)-darwin
+
+windows: ## Builds the binary for windows
+	go build -a -ldflags "-w -X '$(PKG)/cmd.Version=$(VERSION)'"  -o bin/$(PROJECT_NAME).exe
+
+linux: ## Builds the binary for linux
+	go build -a -ldflags "-w -X '$(PKG)/cmd.Version=$(VERSION)'"  -o bin/$(PROJECT_NAME)
 
 .PHONY: docker-build
 docker-build: ## Builds the docker image locally
-	docker build -t ${IMG} .
+	docker build -t ${IMG}:${VERSION} .
 
 .PHONY: docker-push
 docker-push: ## Pushes the docker image to the registry
-	docker push ${IMG}
+	docker push ${IMG}:${VERSION}
 

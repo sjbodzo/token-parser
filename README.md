@@ -1,6 +1,6 @@
 # Overview
 
-This application demoes a simple ETL in Golang using channels. The scenario is receiving batched lists of coins by ID. 
+This application demos a simple ETL in Golang using channels. The scenario is receiving batched lists of coins by ID. 
 
 ## Running This Demo
 TODO
