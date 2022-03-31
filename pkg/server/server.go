@@ -9,6 +9,7 @@ import (
 	"log"
 	"net/http"
 	"strings"
+	"time"
 )
 
 type Server struct {
@@ -30,8 +31,10 @@ func New(c chan coin.Coin) *Server {
 	server := Server{
 		port: port,
 		srv: http.Server{
-			Addr:    fmt.Sprintf(":%d", port),
-			Handler: mux,
+			Addr:         fmt.Sprintf(":%d", port),
+			Handler:      mux,
+			WriteTimeout: 1 * time.Second,
+			ReadTimeout:  2 * time.Second,
 		},
 		coins: c,
 	}
