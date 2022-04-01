@@ -3,9 +3,8 @@ package db
 import (
 	"database/sql"
 	"fmt"
+	pq "github.com/lib/pq"
 	"github.com/sjbodzo/token-parser/pkg/coin"
-
-	_ "github.com/lib/pq"
 )
 
 type postgres struct {
@@ -44,8 +43,8 @@ func (p *postgres) Close() {
 func (p *postgres) AddCoin(c *coin.Coin) error {
 	statement := `
     	INSERT INTO coins (id, exchanges, taskrun)
-		VALUES ($1, $2, $3, $4);`
-	if _, err := p.db.Exec(statement, c.ID, c.Markets, c.TaskRun); err != nil {
+		VALUES ($1, $2, $3);`
+	if _, err := p.db.Exec(statement, c.ID, pq.Array(c.Markets), c.TaskRun); err != nil {
 		return err
 	}
 	return nil
