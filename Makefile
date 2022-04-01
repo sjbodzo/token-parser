@@ -1,5 +1,5 @@
 PROJECT_NAME := "parser"
-VERSION      := $$(git describe --tags | cut -d '-' -f 1)
+VERSION      ?= $$(git describe --tags | cut -d '-' -f 1)
 PKG          := "github.com/sjbodzo/$(PROJECT_NAME)"
 
 ifeq (,$(shell go env GOBIN))
@@ -49,9 +49,9 @@ linux: ## Builds the binary for linux
 
 .PHONY: docker-build
 docker-build: ## Builds the docker image locally
-	docker build -t ${IMG}:${VERSION} .
+	docker build -t ${PKG}:${VERSION} .
 
 .PHONY: docker-push
 docker-push: ## Pushes the docker image to the registry
-	docker push ${IMG}:${VERSION}
+	docker push ${PKG}:${VERSION}
 
