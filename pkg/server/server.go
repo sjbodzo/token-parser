@@ -56,7 +56,6 @@ func (s *Server) parse() func(w http.ResponseWriter, r *http.Request) {
 		s.taskRuns = s.taskRuns + 1 // increment counter to track batch number
 		defer r.Body.Close()
 
-		var coins coin.Coins
 		switch r.Header.Get("Content-Type") {
 		case "application/json":
 			body, err := ioutil.ReadAll(r.Body)
@@ -65,6 +64,7 @@ func (s *Server) parse() func(w http.ResponseWriter, r *http.Request) {
 				http.Error(w, "Unable to recv body", http.StatusInternalServerError)
 			}
 
+			var coins coin.Coins
 			err = json.Unmarshal(body, &coins)
 			if err != nil {
 				log.Println(err)
