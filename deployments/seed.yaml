@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: seed-db
+  namespace: coinapps
+data: 
+  seed.sql: |
+    -- Make the table to hold our coins
+    CREATE TABLE IF NOT EXISTS coins (
+            id text NOT NULL,
+            exchanges varchar ARRAY,
+            taskrun INT NOT NULL CHECK (taskrun > 0)
+    );

@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coinparser
+  labels:
+    app: coinparser
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: coinparser
+  template:
+    metadata:
+      labels:
+        app: coinparser
+        api: coingecko
+    spec:
+      containers:
+        - name: app
+          image: github.com/sjbodzo/parser:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
