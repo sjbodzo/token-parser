@@ -25,11 +25,11 @@ func main() {
 	verifier := coin.NewCoinGeckoVerifier()
 
 	// create a backend to persist coins to
-	var host = "localhost"
-	var port = 9000
+	var host = "coinparserpg-postgresql.coinapps.svc.cluster.local"
+	var port = 5432
 	var user = "postgres"
-	var password = "postgres"
-	var dbname = "coins"
+	var password = "random"
+	var dbname = "crypto"
 	db, err := db.New(host, user, password, dbname, port)
 	if err != nil {
 		log.Println("Could not connect to db")
@@ -89,7 +89,6 @@ func initWorkers(num int, buffer <-chan coin.Coin, v coin.Verify, db db.CoinBack
 func throttle(rate int, source chan coin.Coin) <-chan coin.Coin {
 	bufferChan := make(chan coin.Coin, 50)
 	duration := time.Minute / time.Duration(rate)
-	log.Println(duration)
 	go func() {
 		throttle := time.Tick(duration)
 		for ; true; <-throttle {
