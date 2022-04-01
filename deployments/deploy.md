@@ -22,7 +22,7 @@ podman machine init --cpus 4 --memory 8096
 podman machine set --rootful
 podman machine start
 
-# Create a minikube cluster using a podman backend
+# Create a minikube cluster using a podman token-parser
 minikube start --driver=podman --container-runtime=docker
 ```
 

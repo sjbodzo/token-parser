@@ -17,7 +17,13 @@ spec:
     spec:
       containers:
         - name: app
-          image: github.com/sjbodzo/parser:latest
+          image: github.com/sjbodzo/token-parser:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
+          env:
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: coinparserpg-postgresql
+                  key: postgres-password

@@ -10,15 +10,15 @@ RUN go mod download
 RUN apt update && apt install --yes ca-certificates
 RUN update-ca-certificates
 ADD . /app
-RUN CGO_ENABLED=0 GOOS=linux go build -a -ldflags="-s -w" -o app .
+RUN CGO_ENABLED=0 GOOS=linux go build -a -ldflags="-s -w" -o coinparser .
     
 
 FROM gcr.io/distroless/static:nonroot
 WORKDIR /
- 
+
 COPY --from=builder /app/ .
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 USER 65532:65532
  
-ENTRYPOINT ["./app"]
+ENTRYPOINT ["./coinparser", "server"]
 

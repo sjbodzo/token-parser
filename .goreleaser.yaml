@@ -2,10 +2,10 @@ before:
   hooks:
   - go mod tidy
   
-project_name: parser
+project_name: token-parser
 
 builds:
-  - ldflags: "-extldflags= -w -X 'github.com/sjbodzo/token-parser/cmd.Version={{.Tag}}-{{.ShortCommit}}'"
+  - ldflags: "-extldflags= -w -X 'github.com/sjbodzo/token-token-parser/cmd.Version={{.Tag}}-{{.ShortCommit}}'"
     env:
       - "CGO_ENABLED=0"
       - "GO111MODULE=on"

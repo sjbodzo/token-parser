@@ -22,10 +22,8 @@ type Server struct {
 // New creates a http.Server for processing REST requests.
 // A channel is expected as input to push coins onto as
 // they are parsed in inbound requests.
-func New(c chan coin.Coin) *Server {
-	var port = 8080
-	var apiVersion = "v1"
-	route := fmt.Sprintf("/api/%s/parse", apiVersion)
+func New(c chan coin.Coin, port int, version string) *Server {
+	route := fmt.Sprintf("/api/%s/parse", version)
 	mux := http.NewServeMux()
 
 	server := Server{
