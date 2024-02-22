@@ -17,11 +17,13 @@ spec:
     spec:
       containers:
         - name: app
-          image: github.com/sjbodzo/token-parser:latest
+          image: github.com/sjbodzo/token-parser:1.0.0
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
           env:
+            - name: DB_NAME
+              value: coins
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:

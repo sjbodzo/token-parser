@@ -31,7 +31,7 @@ func init() {
 	serverCmd.PersistentFlags().IntVar(&dbPort, "dbPort", 5432, "DB port to listen on")
 	serverCmd.PersistentFlags().IntVar(&apiRate, "apiRate", 50, "Rate limit in req / minute")
 	serverCmd.PersistentFlags().StringVar(&dbHost, "dbHost", "coinparserpg-postgresql.coinapps.svc.cluster.local", "DB host to connect to")
-	serverCmd.PersistentFlags().StringVar(&dbName, "dbName", "crypto", "DB table to connect to")
+	serverCmd.PersistentFlags().StringVar(&dbName, "dbName", "coins", "DB table to connect to")
 	serverCmd.PersistentFlags().StringVar(&dbPassword, "dbPassword", "", "DB password")
 	serverCmd.PersistentFlags().StringVar(&dbUser, "dbUser", "postgres", "DB user to connect with")
 	serverCmd.PersistentFlags().StringVar(&apiVersion, "apiVersion", "v1", "API version")

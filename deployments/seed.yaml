@@ -3,8 +3,9 @@ kind: ConfigMap
 metadata:
   name: seed-db
   namespace: coinapps
-data: 
+data:
   seed.sql: |
+    CREATE DATABASE "coins" WITH OWNER POSTGRES;
     -- Make the table to hold our coins
     CREATE TABLE IF NOT EXISTS coins (
             id text NOT NULL,
